@@ -5,3 +5,7 @@ Use [d3.js](https://d3js.org/) to make interactive visualisations of [NetworkX](
 Run 
 `$ python e2j.py` 
 to produce `graph.json` from `edges.csv`.
+
+Start a http server in the directory of the project:
+
+`$ python -m http.server`
