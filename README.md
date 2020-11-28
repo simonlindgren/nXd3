@@ -9,3 +9,7 @@ to produce `graph.json` from `edges.csv`.
 Start a http server in the directory of the project:
 
 `$ python -m http.server`
+
+Note the port number (e.g. `:8000`).
+
+Open a browser at `<your-host-ip>:8000` to view the graph.
