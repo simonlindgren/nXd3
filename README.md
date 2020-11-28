@@ -1,7 +1,3 @@
-# Marvel Comic Network Demonstration
+# pynx-d3
 
-This is a simple demonstration of using [NetworkX](https://networkx.github.io/) and [d3.js](https://d3js.org/) (v4.0) to produce an interactive network graph from a sample dataset. In this case I've used the [Marvel Comics Network](http://bioinfo.uib.es/~joemiro/marvel.html) data from R. Alberich, J.Miro-Julia, and F. Rossello.
-
-The resulting network graph extends [Mike Bostock's simple graph demo](http://bl.ocks.org/mbostock/4062045) with some additional features that could be useful for DH scholars interested in networks. I've included a slider that redraws the network based on edge weights, a dropdown for three different types of node centrality, and the ability to click on nodes to see ego networks.
-
-You can see a working demo of the network at [this bl.ocks.org page](http://bl.ocks.org/jrladd/c76799aa63efd7176bd9006f403e854d).
+Use[d3.js](https://d3js.org/) to make interactive visualisations of [NetworkX](https://networkx.github.io/) graphs. This method is based on a fork of code from [jrladd/marvel_network](https://github.com/jrladd/marvel_network). The resulting visualisation extends [Mike Bostock's simple graph demo](http://bl.ocks.org/mbostock/4062045) with additional features: filtering by edge weight, selecting between three different types of node centrality, and cliking nodes to see ego networks.
