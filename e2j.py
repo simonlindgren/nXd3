@@ -60,5 +60,5 @@ nx.set_node_attributes(G, name = 'eigenvector', values = eigenvector)
 data = json_graph.node_link_data(G)
 
 # Output json of the graph.
-with open('marvel.json', 'w') as output:
+with open('graph.json', 'w') as output:
     json.dump(data, output, sort_keys=True, indent=4, separators=(',',':'))
