@@ -1,49 +1,64 @@
 #!/usr/bin/env python3
 
 import networkx as nx
-import pandas as pd
 from networkx.readwrite import json_graph
-import json
+import json, community
 from networkx.algorithms import centrality as cn
-import community as community_louvain # installed as pip install python-louvain
+from networkx.algorithms import bipartite
+import pandas as pd
 
-# Input is an edgelist csv with only source and target columns (named)
-# We import it and calculate weights
+# Read edgelist from edges.csv
+edgelist = pd.read_csv("edges.csv")
 
-edgelist = pd.read_csv('edges.csv')
-M = nx.from_pandas_edgelist(edgelist, 'source', 'target', create_using = nx.MultiGraph())
+# Calculate weights
+G = nx.from_pandas_edgelist(edgelist, 'source', 'target')
+W = bipartite.weighted_projected_graph(G, edgelist['target'].unique())
+W.edges(data=True)
+edgelist = nx.to_pandas_edgelist(W)
 
+# Make nodelist based on edgelist
+sources = list(set(edgelist.source))
+targets = list(set(edgelist.target))
+nodes = list(set(sources + targets))
+nodelist = pd.DataFrame(nodes).reset_index()
+nodelist.columns = ['id', 'name']
+
+# Make a node dictionary
+node_dict = {k: v for k, v in zip(nodelist.name, nodelist.id)}
+nodes = node_dict.keys()
+node_ids = node_dict.values()
+
+# Make edge tuples
+sources = [node_dict.get(s) for s in edgelist.source]
+targets = [node_dict.get(s) for s in edgelist.target]
+weights = [w for w in edgelist.weight]
+
+edge_tuples = []
+for s,t,w in zip(sources,targets,weights):
+    edge_tuples.append((s,t,w))
+
+# Make a node names dictionary
+name_dict = {k: v for k, v in zip(nodelist.id, nodelist.name)}
+
+# Initialize graph, add nodes and edges, calculate modularity and centrality.
 G = nx.Graph()
-for u,v,data in M.edges(data=True):
-    w = data['weight'] if 'weight' in data else 1.0
-    if G.has_edge(u,v):
-        G[u][v]['weight'] += w
-    else:
-        G.add_edge(u, v, weight=w)
-
-# Louvain algorithm community detection
-groups = community_louvain.best_partition(G)
-
-# Calculate centrality measures
+G.add_nodes_from(list(node_ids))
+G.add_weighted_edges_from(edge_tuples)
+groups = community.best_partition(G)
 degree = cn.degree_centrality(G)
 betweenness = cn.betweenness_centrality(G, weight='weight')
 eigenvector = cn.eigenvector_centrality(G, weight='weight')
 
-# Create a labels dict
-labels = {}
-for l in G.nodes():
-    labels[l] = l
-
 # Add node attributes for name, modularity, and three types of centrality.
-nx.set_node_attributes(G, labels, 'name')
-nx.set_node_attributes(G, groups, 'group')
-nx.set_node_attributes(G, degree, 'degree')
-nx.set_node_attributes(G, betweenness, 'betweenness')
-nx.set_node_attributes(G, eigenvector, 'eigenvector')
+nx.set_node_attributes(G, name = 'name', values = name_dict)
+nx.set_node_attributes(G, name = 'group', values = groups)
+nx.set_node_attributes(G, name = 'degree', values = degree)
+nx.set_node_attributes(G, name = 'betweenness', values = betweenness)
+nx.set_node_attributes(G, name = 'eigenvector', values = eigenvector)
 
-# Create json representation of the graph for d3
+# Create json representation of the graph (for d3).
 data = json_graph.node_link_data(G)
 
-# Save json to file
-with open('graph.json', 'w') as output:
+# Output json of the graph.
+with open('marvel.json', 'w') as output:
     json.dump(data, output, sort_keys=True, indent=4, separators=(',',':'))
