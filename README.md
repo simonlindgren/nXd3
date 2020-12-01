@@ -18,7 +18,7 @@ This method was based on a combination of [this example](https://bl.ocks.org/ste
 
 nXd3 takes as input an `edges.csv` file with (potentially) parallel edges and no calculated weights.
 
-Run `$ python3 e2j.py` to produce `graph.json` from `edges.csv`. It will treat the graph as undirected. NetworkX is used to calculate edge weights, *Degree*, *Betweenness*, and *Eigenvector* centralities. Louvain modularity is calculated with [python-louvain](https://github.com/taynaud/python-louvain).
+Run `$ python3 e2j.py` to produce `graph.json` from `edges.csv`. It will treat the graph as undirected. NetworkX is used to calculate edge weights, degree, betweenness, and eigenvector centralities. Louvain modularity is calculated with [python-louvain](https://github.com/taynaud/python-louvain).
 
 ### Visualise the graph
 
