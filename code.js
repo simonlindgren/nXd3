@@ -10,10 +10,26 @@ var graph;
 // sets the color
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
+var degreeSize;
+
 // load the data
 d3.json("graph.json", function (error, _graph) {
   if (error) throw error;
   graph = _graph;
+
+  // Linear scale for degree centrality.
+  degreeSize = d3
+    .scaleLinear()
+    .domain([
+      d3.min(graph.nodes, function (d) {
+        return d.degree;
+      }),
+      d3.max(graph.nodes, function (d) {
+        return d.degree;
+      }),
+    ])
+    .range([8, 25]);
+
   initializeDisplay();
   initializeSimulation();
   initializeSliders();
@@ -32,7 +48,6 @@ function initializeSimulation() {
 }
 
 function initializeSliders() {
-  var thresholdSlider = document.getElementById("threshold");
   threshold.setAttribute(
     "min",
     d3.min(graph.links, function (d) {
@@ -47,21 +62,8 @@ function initializeSliders() {
   );
 }
 
-// Linear scale for degree centrality.
-var degreeSize = d3
-  .scaleLinear()
-  .domain([
-    d3.min(graph.nodes, function (d) {
-      return d.degree;
-    }),
-    d3.max(graph.nodes, function (d) {
-      return d.degree;
-    }),
-  ])
-  .range([8, 25]);
-
 // values for all forces
-forceProperties = {
+var forceProperties = {
   center: {
     x: 0.5,
     y: 0.5,
@@ -126,7 +128,7 @@ function updateForces() {
     .strength(
       forceProperties.collide.strength * forceProperties.collide.enabled
     )
-    .radius(forceProperties.collide.radius)
+    .radius((d) => degreeSize(d.degree))
     .iterations(forceProperties.collide.iterations);
   simulation
     .force("forceX")
@@ -177,7 +179,9 @@ function initializeDisplay() {
     })
     .attr("stroke", "black")
     .attr("stroke-width", 0.75)
-    //.attr('r', function(d, i) { return degreeSize(d.degree); })
+    .attr("r", function (d) {
+      return degreeSize(d.degree);
+    })
     .call(
       d3
         .drag()
@@ -196,7 +200,7 @@ function initializeDisplay() {
 
 // update the display based on the forces (but not positions)
 function updateDisplay() {
-  node.attr("r", forceProperties.collide.radius);
+  //node.attr("r", forceProperties.collide.radius);
 
   link
     .attr("stroke-width", forceProperties.link.enabled ? 1 : 0.5)
