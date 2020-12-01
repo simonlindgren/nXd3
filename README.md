@@ -18,10 +18,10 @@ This method was initially based on a fork of code from [jrladd/marvel_network](h
 
 nXd3 takes as input an `edges.csv` file with (potentially) parallel edges and no calculated weights.
 
-Run `$ python e2j.py` to produce `graph.json` from `edges.csv`. It will treat the graph as undirected. NetworkX is used to calculate edge weights, *Degree*, *Betweenness*, and *Eigenvector* centralities. Louvain modularity is calculated with [python-louvain](https://github.com/taynaud/python-louvain).
+Run `$ python3 e2j.py` to produce `graph.json` from `edges.csv`. It will treat the graph as undirected. NetworkX is used to calculate edge weights, *Degree*, *Betweenness*, and *Eigenvector* centralities. Louvain modularity is calculated with [python-louvain](https://github.com/taynaud/python-louvain).
 
 ### Visualise the graph
 
 The visualisation can't be run locally as d3.js (javascript) is not allowed to load filed from local disk. Therefore a web server must be set up to view the visualisation.
 
-Start a http server in the directory of the project (`$ python -m http.server`). Note the port number (e.g. `:8000`). Then open a browser at `<your-host-ip>:8000` (e.g. `127.0.0.1:8000`) to view and manipulate the graph.
+Start a http server in the directory of the project (`$ python3 -m http.server`). Note the port number (e.g. `:8000`). Then open a browser at `<your-host-ip>:8000` (e.g. `127.0.0.1:8000`) to view and manipulate the graph.
