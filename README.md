@@ -6,7 +6,7 @@ This method was based on a combination of [this example](https://bl.ocks.org/ste
 
 - [x] Nodes coloured by Louvain modularity
 - [ ] Size nodes by three different centrality measures calculated in NetworkX 
-- [ ] Slider to remove edges by weight
+- [x] Slider to remove edges by weight
 - [ ] Toggle disconected node visibility
 - [ ] Sliders for Position, Charge, No Overlap, X Force, Y Force, and Edge Length
 - [ ] Toggle node label visibility
