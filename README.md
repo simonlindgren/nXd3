@@ -11,7 +11,20 @@ Use [d3.js](https://d3js.org/) to make interactive visualisations of [NetworkX](
 - [ ] Zoom the graph view
 - [ ] Export the graph to image
 
-Run 
+
+#### Prepare input file 
+
+nXd3 takes as input an `edges.csv` file with parallel edges, such as:
+
+```
+source,target
+pig,cow
+pig,cow
+ape,pig
+pig,ape
+```
+
+
 `$ python e2j.py` 
 to produce `graph.json` from `edges.csv`.
 
