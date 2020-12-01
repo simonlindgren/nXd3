@@ -14,22 +14,9 @@ Use [d3.js](https://d3js.org/) to make interactive visualisations of [NetworkX](
 
 ### Prepare input file 
 
-nXd3 takes as input an `edges.csv` file with parallel edges, such as:
+nXd3 takes as input an `edges.csv` file with (potentially) parallel edges and no calculated weights.
 
-`source,target`
-
-`pig,cow`
-
-
-```
-source,target
-pig,cow
-pig,cow
-ape,pig
-pig,ape
-```
-
-Run `$ python e2j.py` to produce `graph.json` from `edges.csv`. It will treat the graph as undirected. NetworkX is used to calculate **Degree**, **Betweenness**, and **Eigenvector** centralities. Louvain modularity is calculated with [python-louvain[(https://github.com/taynaud/python-louvain).
+Run `$ python e2j.py` to produce `graph.json` from `edges.csv`. It will treat the graph as undirected. NetworkX is used to calculate edge weights, **Degree**, **Betweenness**, and **Eigenvector** centralities. Louvain modularity is calculated with [python-louvain[(https://github.com/taynaud/python-louvain).
 
 ### Visualise the graph
 
