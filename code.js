@@ -92,7 +92,7 @@ var forceProperties = {
   },
   link: {
     enabled: true,
-    distance: 30,
+    distance: 150,
     iterations: 1,
   },
 };
@@ -292,5 +292,30 @@ function setEdgeWeight(value) {
   // Restart simulation with new link data.
   simulation.nodes(graph.nodes).on("tick", ticked).force("link").links(newData);
 
+  simulation.alphaTarget(0.1).restart();
+}
+
+function setCentrality(centrality) {
+  var centralitySize = d3
+    .scaleLinear()
+    .domain([
+      d3.min(graph.nodes, function (d) {
+        return d[centrality];
+      }),
+      d3.max(graph.nodes, function (d) {
+        return d[centrality];
+      }),
+    ])
+    .range([8, 25]);
+  node.attr("r", function (d) {
+    return centralitySize(d[centrality]);
+  });
+  // Recalculate collision detection based on selected centrality.
+  simulation.force(
+    "collide",
+    d3.forceCollide().radius(function (d) {
+      return centralitySize(d[centrality]);
+    })
+  );
   simulation.alphaTarget(0.1).restart();
 }
