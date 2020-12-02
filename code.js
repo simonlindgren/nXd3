@@ -172,7 +172,8 @@ function initializeDisplay() {
     .data(graph.links)
     .enter()
     .append("line")
-    .attr("style", "stroke: #aaa");
+    .attr("stroke", "#aaa")
+    .attr("stroke-width", 500);
 
   // set the data and properties of node circles
   node = svg
@@ -241,7 +242,9 @@ function updateDisplay() {
   });
 
   link
-    .attr("stroke-width", forceProperties.link.enabled ? 1 : 0.5)
+    .attr("stroke-width", function (d) {
+      return d.weight / 5;
+    })
     .attr("opacity", forceProperties.link.enabled ? 1 : 0);
 }
 
