@@ -10,10 +10,8 @@ This method was based on a combination of [this example](https://bl.ocks.org/ste
 - Sliders for Position, Charge, No Overlap, X Force, Y Force, and Edge Length
 - Zoom the svg view
 - Toggle node label visibility
-
-- [ ] Node search
-- [ ] Export the graph to image
-
+- Download as static svg
+- Open svg in new tab without toolbar
 
 ### Prepare input file 
 
