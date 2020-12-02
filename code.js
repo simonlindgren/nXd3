@@ -374,7 +374,7 @@ document.getElementById("open-in-tab").onclick = (evt) => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "download.svg";
+  a.download = "graph.svg";
 
   // Click handler that releases the object URL after the element has been clicked
   // This is required for one-off downloads of the blob content
