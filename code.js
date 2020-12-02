@@ -3,7 +3,7 @@ var svg = d3.select("svg"),
   height = +svg.node().getBoundingClientRect().height;
 
 // svg objects
-var link, node;
+var link, node, circles;
 // the data - an object with nodes and links
 var graph;
 
@@ -169,10 +169,12 @@ function initializeDisplay() {
   node = svg
     .append("g")
     .attr("class", "nodes")
-
-    .selectAll("circle")
+    .selectAll("g")
     .data(graph.nodes)
     .enter()
+    .append("g");
+
+  circles = node
     .append("circle")
     .attr("fill", function (d) {
       return color(d.group);
@@ -194,13 +196,28 @@ function initializeDisplay() {
   node.append("title").text(function (d) {
     return d.name;
   });
+
+  node
+    .append("text")
+    .attr("x", function () {
+      const circle = this.parentElement.querySelector("circle");
+      return parseInt(circle.getAttribute("r")) + 5;
+    })
+    .attr("y", 3)
+    .text(function (d) {
+      return d.name;
+    });
+
   // visualize the graph
   updateDisplay();
 }
 
 // update the display based on the forces (but not positions)
 function updateDisplay() {
-  //node.attr("r", forceProperties.collide.radius);
+  node.selectAll("text").attr("x", function () {
+    const circle = this.parentElement.querySelector("circle");
+    return parseInt(circle.getAttribute("r")) + 5;
+  });
 
   link
     .attr("stroke-width", forceProperties.link.enabled ? 1 : 0.5)
@@ -223,13 +240,9 @@ function ticked() {
       return d.target.y;
     });
 
-  node
-    .attr("cx", function (d) {
-      return d.x;
-    })
-    .attr("cy", function (d) {
-      return d.y;
-    });
+  node.attr("transform", function (d) {
+    return `translate(${d.x},${d.y})`;
+  });
   d3.select("#alpha_value").style("flex-basis", simulation.alpha() * 100 + "%");
 }
 
@@ -307,7 +320,7 @@ function setCentrality(centrality) {
       }),
     ])
     .range([8, 25]);
-  node.attr("r", function (d) {
+  circles.attr("r", function (d) {
     return centralitySize(d[centrality]);
   });
   // Recalculate collision detection based on selected centrality.
