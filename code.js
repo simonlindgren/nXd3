@@ -7,7 +7,7 @@ var link, node, circles;
 // the data - an object with nodes and links
 var graph;
 
-// sets the color
+// sets the color of the nodes
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 const STATIC_SIZE = 8;
@@ -172,8 +172,8 @@ function initializeDisplay() {
     .data(graph.links)
     .enter()
     .append("line")
-    .attr("stroke", "#aaa")
-    .attr("stroke-width", 500);
+    // Sets link color
+    .attr("stroke", "#aaa");
 
   // set the data and properties of node circles
   node = svg
@@ -241,11 +241,7 @@ function updateDisplay() {
     return parseInt(circle.getAttribute("r")) + 5;
   });
 
-  link
-    .attr("stroke-width", function (d) {
-      return d.weight / 5;
-    })
-    .attr("opacity", forceProperties.link.enabled ? 1 : 0);
+  link.attr("opacity", forceProperties.link.enabled ? 1 : 0);
 }
 
 // update the display positions after each simulation tick
@@ -371,7 +367,7 @@ function toggleTitleVisiblity() {
 }
 
 // we need to handle a user gesture to use 'open'
-document.getElementById("open-in-tab").onclick = (evt) => {
+document.getElementById("open-in-tab").onclick = () => {
   // grab your svg element
   const svg = document.querySelector("svg");
   svg.style.font = "10px sans-serif";
@@ -400,3 +396,27 @@ document.getElementById("open-in-tab").onclick = (evt) => {
 
   a.click();
 };
+
+let weightDivide = 5;
+
+function setWeightDivision(value) {
+  const scale = parseInt(value);
+  d3.select("#link_WeightDividerOutput").text(scale);
+  weightDivide = scale;
+  setLinkWidth("weight");
+}
+
+function setLinkWidth(widthType) {
+  link.attr("stroke-width", function (d) {
+    const weightDivider = document.getElementById("weight-divider-label");
+    if (widthType === "static") {
+      weightDivider.style.display = "none";
+      return 0.5;
+    }
+    if (widthType === "weight") {
+      weightDivider.style.display = "block";
+      return d.weight / weightDivide;
+    }
+    return 1;
+  });
+}

@@ -354,6 +354,31 @@
           </label>
         </div>
         <div class="force">
+          <p><label>LINK WIDTH</label></p>
+          <label
+            style="margin-bottom: 10px"
+            title="The force will push/pull nodes to make links this long"
+          >
+            <select id="link-width" onchange="setLinkWidth(this.value);">
+              <option value="static" selected="selected">Static</option>
+              <option value="weight">Weight</option>
+            </select>
+          </label>
+          <label id="weight-divider-label" style="display: none">
+            Scale Weight
+            <output id="link_WeightDividerOutput">1</output>
+            <input
+              id="threshold"
+              type="range"
+              min="1"
+              max="200"
+              value="5"
+              step="1"
+              oninput="setWeightDivision(this.value);"
+            />
+          </label>
+        </div>
+        <div class="force">
           <p><label>LABELS</label></p>
           <label title="The force will push/pull nodes to make links this long">
             <input
