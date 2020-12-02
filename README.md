@@ -11,7 +11,7 @@ This method was based on a combination of [this example](https://bl.ocks.org/ste
 - Zoom the svg view
 - Toggle node label visibility
 - Download as static svg
-- Open svg in new tab without toolbar (`?hideToolbar`)
+- Open svg in new tab without toolbar (add `?hideToolbar` to url)
 
 ### Prepare input file 
 
