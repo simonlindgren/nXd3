@@ -4,14 +4,23 @@ Use [d3.js](https://d3js.org/) to make interactive visualisations of [NetworkX](
 
 This method was based on a combination of [this example](https://bl.ocks.org/steveharoz/8c3e2524079a8c440df60c1ab72b5d03) by [Steve Haroz](https://github.com/steveharoz), and code from [jrladd/marvel_network](https://github.com/jrladd/marvel_network), both of which extend [Mike Bostock's simple graph demo](http://bl.ocks.org/mbostock/4062045) with additional features. In addition to those features, more functionality has been added, so that nXd3 now includes:
 
-- Nodes coloured by Louvain modularity
-- Size nodes by three different centrality measures calculated in NetworkX 
-- Slider to remove edges by weight [currently dysfunctional]
-- Sliders for Position, Charge, No Overlap, X Force, Y Force, and Edge Length
+*Graph*
+
+- Sliders for position, charge, no overlap, xforce, yforce, and edge length
 - Zoom the svg view (mousewheel, two-finger slide)
-- Toggle node label visibility
 - Download as static svg
 - Open svg in new tab without toolbar (add `?hideToolbar` to url)
+
+*Nodes*
+
+- Nodes coloured by Louvain modularity
+- Size nodes by three different centrality measures calculated in NetworkX 
+- Toggle node label visibility
+
+*Edges* 
+
+- Edge thickness by weight
+- Slider to remove edges by weight [currently dysfunctional]
 
 ### Prepare input file 
 
