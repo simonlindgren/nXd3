@@ -17,6 +17,7 @@ var degreeSize;
 const searchParams = new URLSearchParams(location.search);
 if (searchParams.has("hideToolbar")) {
   document.querySelector(".controls").classList.add("hide");
+  document.querySelector("header").classList.add("hide");
 }
 
 // load the data
