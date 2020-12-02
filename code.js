@@ -183,7 +183,7 @@ function initializeDisplay() {
     })
     .attr("stroke", "black")
     .attr("stroke-width", 0.75)
-    .attr("r", function (d) {
+    .attr("r", function () {
       return STATIC_SIZE;
     })
     .call(
@@ -209,6 +209,18 @@ function initializeDisplay() {
     .text(function (d) {
       return d.name;
     });
+
+  // Zooming function translates the size of the svg container.
+  function zoomed() {
+    const transform = `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`;
+    const nodes = document.querySelector(".nodes");
+    const links = document.querySelector(".links");
+    nodes.setAttribute("transform", transform);
+    links.setAttribute("transform", transform);
+  }
+
+  // Call zoom for svg container.
+  svg.call(d3.zoom().on("zoom", zoomed));
 
   // visualize the graph
   updateDisplay();
