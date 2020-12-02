@@ -165,7 +165,8 @@ function initializeDisplay() {
     .selectAll("line")
     .data(graph.links)
     .enter()
-    .append("line");
+    .append("line")
+    .attr("style", "stroke: #aaa");
 
   // set the data and properties of node circles
   node = svg
@@ -359,3 +360,34 @@ function toggleTitleVisiblity() {
   }
   nodes.classList.add("hide");
 }
+
+// we need to handle a user gesture to use 'open'
+document.getElementById("open-in-tab").onclick = (evt) => {
+  // grab your svg element
+  const svg = document.querySelector("svg");
+  svg.style.font = "10px sans-serif";
+  // convert to a valid XML source
+  const as_text = new XMLSerializer().serializeToString(svg);
+  // store in a Blob
+  const blob = new Blob([as_text], { type: "image/svg+xml" });
+  // create an URI pointing to that blob
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "download.svg";
+
+  // Click handler that releases the object URL after the element has been clicked
+  // This is required for one-off downloads of the blob content
+  const clickHandler = () => {
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+      this.removeEventListener("click", clickHandler);
+    }, 150);
+  };
+
+  // Add the click event listener on the anchor element
+  // Comment out this line if you don't want a one-off download of the blob content
+  a.addEventListener("click", clickHandler, false);
+
+  a.click();
+};
