@@ -8,9 +8,10 @@ This method was based on a combination of [this example](https://bl.ocks.org/ste
 - Size nodes by three different centrality measures calculated in NetworkX 
 - Slider to remove edges by weight
 - Sliders for Position, Charge, No Overlap, X Force, Y Force, and Edge Length
+- Zoom the svg view
+- Toggle node label visibility
+
 - [ ] Node search
-- [x] Toggle node label visibility
-- [ ] Zoom the graph view
 - [ ] Export the graph to image
 
 
