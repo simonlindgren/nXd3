@@ -336,9 +336,10 @@
         </label>
       </div>
       <div class="force">
-        <p><label>CENTRALITY</label></p>
+        <p><label>NODE SIZE</label></p>
         <label title="The force will push/pull nodes to make links this long">
           <select id="centrality" onchange="setCentrality(this.value);">
+            <option value="static" selected="selected">Static</option>
             <option value="degree">Degree centrality</option>
             <option value="eigenvector">Eigenvector centrality</option>
             <option value="betweenness">Betweenness centrality</option>

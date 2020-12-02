@@ -10,6 +10,8 @@ var graph;
 // sets the color
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
+const STATIC_SIZE = 8;
+
 var degreeSize;
 
 // load the data
@@ -128,7 +130,7 @@ function updateForces() {
     .strength(
       forceProperties.collide.strength * forceProperties.collide.enabled
     )
-    .radius((d) => degreeSize(d.degree))
+    .radius(STATIC_SIZE)
     .iterations(forceProperties.collide.iterations);
   simulation
     .force("forceX")
@@ -182,7 +184,7 @@ function initializeDisplay() {
     .attr("stroke", "black")
     .attr("stroke-width", 0.75)
     .attr("r", function (d) {
-      return degreeSize(d.degree);
+      return STATIC_SIZE;
     })
     .call(
       d3
@@ -321,6 +323,9 @@ function setCentrality(centrality) {
     ])
     .range([8, 25]);
   circles.attr("r", function (d) {
+    if (centrality === "static") {
+      return STATIC_SIZE;
+    }
     return centralitySize(d[centrality]);
   });
   // Recalculate collision detection based on selected centrality.
