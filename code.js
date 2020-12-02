@@ -332,3 +332,13 @@ function setCentrality(centrality) {
   );
   simulation.alphaTarget(0.1).restart();
 }
+
+function toggleTitleVisiblity() {
+  const visibility = document.getElementById("title-visibility").checked;
+  const nodes = document.querySelector(".nodes");
+  if (visibility) {
+    nodes.classList.remove("hide");
+    return;
+  }
+  nodes.classList.add("hide");
+}

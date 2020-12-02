@@ -76,6 +76,13 @@
       .nodes circle {
         pointer-events: all;
       }
+      .nodes text {
+        opacity: 1;
+        transition: opacity 200ms ease-out;
+      }
+      .nodes.hide text {
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
@@ -336,6 +343,12 @@
             <option value="eigenvector">Eigenvector centrality</option>
             <option value="betweenness">Betweenness centrality</option>
           </select>
+        </label>
+      </div>
+      <div class="force">
+        <p><label>LABELS</label></p>
+        <label title="The force will push/pull nodes to make links this long">
+          <input id="title-visibility" type="checkbox" name="show-titles" onchange="toggleTitleVisiblity(this.value);" checked/> Show labels
         </label>
       </div>
     </div>
