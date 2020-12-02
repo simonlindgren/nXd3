@@ -14,6 +14,11 @@ const STATIC_SIZE = 8;
 
 var degreeSize;
 
+const searchParams = new URLSearchParams(location.search);
+if (searchParams.has("hideToolbar")) {
+  document.querySelector(".controls").classList.add("hide");
+}
+
 // load the data
 d3.json("graph.json", function (error, _graph) {
   if (error) throw error;
