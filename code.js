@@ -56,13 +56,14 @@ function initializeSimulation() {
 }
 
 function initializeSliders() {
-  threshold.setAttribute(
+  const thresholdSelector = document.getElementById("threshold");
+  thresholdSelector.setAttribute(
     "min",
     d3.min(graph.links, function (d) {
       return d.weight;
     })
   );
-  threshold.setAttribute(
+  thresholdSelector.setAttribute(
     "max",
     d3.max(graph.links, function (d) {
       return d.weight;
@@ -301,7 +302,7 @@ function updateAll() {
 // edge weight slider
 
 function setEdgeWeight(value) {
-  var threshold = parseInt(value);
+  var threshold = parseFloat(value);
   d3.select("#link_ThresholdSliderOutput").text(threshold);
 
   // Find the links that are at or above the threshold.
