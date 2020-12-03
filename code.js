@@ -11,6 +11,7 @@ var graph;
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 const STATIC_SIZE = 8;
+const STROKE_COLOR = "#aaa";
 
 var degreeSize;
 
@@ -174,7 +175,7 @@ function initializeDisplay() {
     .enter()
     .append("line")
     // Sets link color
-    .attr("stroke", "#aaa");
+    .attr("stroke", STROKE_COLOR);
 
   // set the data and properties of node circles
   node = svg
@@ -318,7 +319,11 @@ function setEdgeWeight(value) {
     return d.source + ", " + d.target;
   });
   link.exit().remove();
-  var linkEnter = link.enter().append("line").attr("class", "link");
+  var linkEnter = link
+    .enter()
+    .append("line")
+    .attr("class", "link")
+    .attr("stroke", STROKE_COLOR);
   link = linkEnter.merge(link);
 
   node = node.data(graph.nodes);
