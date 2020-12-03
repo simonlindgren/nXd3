@@ -11,6 +11,7 @@ var graph;
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 const STATIC_SIZE = 8;
+const STROKE_COLOR = "#aaa";
 
 var degreeSize;
 
@@ -56,13 +57,14 @@ function initializeSimulation() {
 }
 
 function initializeSliders() {
-  threshold.setAttribute(
+  const thresholdSelector = document.getElementById("threshold");
+  thresholdSelector.setAttribute(
     "min",
     d3.min(graph.links, function (d) {
       return d.weight;
     })
   );
-  threshold.setAttribute(
+  thresholdSelector.setAttribute(
     "max",
     d3.max(graph.links, function (d) {
       return d.weight;
@@ -173,7 +175,7 @@ function initializeDisplay() {
     .enter()
     .append("line")
     // Sets link color
-    .attr("stroke", "#aaa");
+    .attr("stroke", STROKE_COLOR);
 
   // set the data and properties of node circles
   node = svg
@@ -301,7 +303,7 @@ function updateAll() {
 // edge weight slider
 
 function setEdgeWeight(value) {
-  var threshold = parseInt(value);
+  var threshold = parseFloat(value);
   d3.select("#link_ThresholdSliderOutput").text(threshold);
 
   // Find the links that are at or above the threshold.
@@ -317,7 +319,11 @@ function setEdgeWeight(value) {
     return d.source + ", " + d.target;
   });
   link.exit().remove();
-  var linkEnter = link.enter().append("line").attr("class", "link");
+  var linkEnter = link
+    .enter()
+    .append("line")
+    .attr("class", "link")
+    .attr("stroke", STROKE_COLOR);
   link = linkEnter.merge(link);
 
   node = node.data(graph.nodes);
